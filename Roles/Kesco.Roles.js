@@ -13,7 +13,6 @@ function roles_setElementFocus(className, elId) {
         $("." + className).first().focus();
 }
 
-
 roles_RecordsAdd.form = null;
 
 function roles_RecordsAdd(titleForm, userId, roleId, personId) {
@@ -26,34 +25,36 @@ function roles_RecordsAdd(titleForm, userId, roleId, personId) {
     } else
         roles_userId = roles_roleId = roles_personId = "";
 
-    if (null == roles_RecordsAdd.form) {
-        var width = 390;
-        var height = 225;
-        var onOpen = null; //function () { roles_addRole(); };
-        var buttons = [
-            {
-                id: "btnPosition_Save",
-                text: roles_clientLocalization.cmdSave,
-                icons: {
-                    primary: v4_buttonIcons.Ok
-                },
-                width: 100,
-                click: roles_Records_Save
+    
+    var width = 400;
+    var height = 250;
+    var onOpen = null; //function () { roles_addRole(); };
+    var onClose = function () { v4s_hidePopup(true); }
+    var buttons = [
+        {
+            id: "btnPosition_Save",
+            text: roles_clientLocalization.cmdSave,
+            icons: {
+                primary: v4_buttonIcons.Ok
             },
-            {
-                id: "btnPosition_Cancel",
-                text: roles_clientLocalization.cmdCancel,
-                icons: {
-                    primary: v4_buttonIcons.Cancel
-                },
-                width: 100,
-                click: roles_Records_Close
-            }
-        ];
+            width: 100,
+            click: roles_Records_Save,
+            kescoCheck: 1
+        },
+        {
+            id: "btnPosition_Cancel",
+            text: roles_clientLocalization.cmdCancel,
+            icons: {
+                primary: v4_buttonIcons.Cancel
+            },
+            width: 100,
+            click: roles_Records_Close
+        }
+    ];
 
-            roles_RecordsAdd.form = v4_dialog("divRoleAdd", $("#divRoleAdd"), title, width, height, onOpen, null, buttons);
+    roles_RecordsAdd.form = v4_dialog("divRoleAdd", $("#divRoleAdd"), title, width, height, onOpen, onClose, buttons);
             
-    }
+    
     $("#divRoleAdd").dialog("option", "title", title);
     roles_RecordsAdd.form.dialog("open");
 
@@ -62,12 +63,13 @@ function roles_RecordsAdd(titleForm, userId, roleId, personId) {
 function roles_Records_Save(check) {
 
     Wait.render(true);
-    cmdasync("cmd", "PositionSave", "UserId", roles_userId, "RoleId", roles_roleId, "PersonId", roles_personId, "Check", (check) ? 1 : 0);
+    cmdasync("cmd", "PositionSave", "UserId", roles_userId, "RoleId", roles_roleId, "PersonId", roles_personId, "Check", (check == 0) ? 0 : 1);
 }
 
 function roles_Records_Close() {
     if (null != roles_RecordsAdd.form)
         roles_RecordsAdd.form.dialog("close");
+    cmd('cmd', 'ClearArtifact');
     roles_setElementFocus(null, "efFilter_Role_0");
 }
 

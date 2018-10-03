@@ -162,6 +162,9 @@ ROLES_TitleAddRole:""{2}""
                 case "RefreshData":
                     RefreshData();
                     break;
+                case "ClearArtifact":
+                    ClearArtifact();
+                    break;
                 case "ClearData":
                     ClearData();
                     efFilter_Role.Focus();
@@ -579,6 +582,16 @@ ROLES_TitleAddRole:""{2}""
                 else
                     JS.Write("roles_setElementFocus(null,'btnPosition_Save');");
             }
+            ClearArtifact();
+        }
+
+        private void ClearArtifact()
+        {
+            return;
+            if (efPosition_Role.Value.Length == 0) efPosition_Role.ValueText = "";
+            if (efPosition_Employee.Value.Length == 0) efPosition_Employee.ValueText = "";
+            if (efPosition_Customer.Value.Length == 0) efPosition_Customer.ValueText = "";
+            if (efPosition_BProject.Value.Length == 0) efPosition_BProject.ValueText = "";
         }
 
         /// <summary>
@@ -590,6 +603,7 @@ ROLES_TitleAddRole:""{2}""
         /// <param name="check">Выполнять проверку данных перед сохранением</param>
         private void PositionSave(string userId, string roleId, string personId, bool check)
         {
+            ClearArtifact();
             if (check)
             {
                 if (efPosition_Role.Value.Length == 0)

@@ -17,6 +17,8 @@
         .marginT { margin-top: 3px; }
 
         .marginT2 { margin-top: 7px; }
+        
+        .marginB2 { margin-bottom: 7px; }
 
         .w75 {
             white-space: nowrap;
@@ -86,7 +88,7 @@
                 <%= Resx.GetString("cEmplName") %>:
             </div>
             <div class="disp_inlineBlockS">
-                <dbs:DBSEmployee ID="efPosition_Employee" runat="server" Width="230" OnChanged="efPosition_Employee_OnChanged" AutoSetSingleValue="True" IsRequired="True"></dbs:DBSEmployee>
+                <dbs:DBSEmployee ID="efPosition_Employee" runat="server" Width="230" OnChanged="efPosition_Employee_OnChanged" AutoSetSingleValue="True" IsAlwaysAdvancedSearch="True" IsRequired="True"></dbs:DBSEmployee>
             </div>
         </div>
         <div class="marginT2 marginL">
@@ -104,11 +106,17 @@
             <div class="disp_inlineBlockS">
                 <dbs:DBSBusinessProject ID="efPosition_BProject" runat="server" Width="230" OnChanged="efPosition_BProject_OnChanged" AutoSetSingleValue="True" MaxItemsInPopup="100" MaxItemsInQuery="101"></dbs:DBSBusinessProject>
             </div>
-        </div>
+        </div>       
     </div>
-    <div class="marginT2 marginL" style="font-size: 7pt">
-        <base:Changed runat="server" ID="efChanged"></base:Changed>
-    </div>
+
+     <div class="marginT2 marginL marginB2" style="font-size: 7pt">            
+            <div>&nbsp;</div>
+            <base:Changed runat="server" ID="efChanged"></base:Changed>
+           
+     </div>
+
+   
+       
 </div>
 </body>
 </html>

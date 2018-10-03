@@ -153,7 +153,7 @@ namespace Kesco.App.Web.Roles
             using (
                 var dbReader =
                     new DBReader(
-                        SQLQueries.SELECT_Роли + " ORDER BY Роль", CommandType.Text,
+                        SQLQueries.SELECT_Роли + " ORDER BY КодРоли", CommandType.Text,
                         Config.DS_user))
             {
                 if (dbReader.HasRows)
@@ -165,6 +165,7 @@ namespace Kesco.App.Web.Roles
                     w.Write("<table class='grid'>");
                     w.Write("<tr class='gridHeader'>");
                     if (_returnState) w.Write("<td></td>");
+                    w.Write("<td>{0}</td>", Resx.GetString("sCode"));
                     w.Write("<td>{0}</td>", Resx.GetString("sName"));
                     w.Write("<td>{0}</td>", Resx.GetString("lblDescriptionForm"));
                     w.Write("</tr>");
@@ -175,6 +176,7 @@ namespace Kesco.App.Web.Roles
                             w.Write(
                                 "<td><a href=\"javascript:void();\" onclick=\"v4_returnValue({0},'{1}');\"><img src=\"/styles/backtolist.gif\" border=0/></a></td>",
                                 dbReader.GetInt32(colКодРоли), HttpUtility.HtmlEncode(dbReader.GetString(colРоль)));
+                        w.Write("<td>{0}</td>", dbReader.GetInt32(colКодРоли));
                         w.Write("<td>{0}</td>", HttpUtility.HtmlEncode(dbReader.GetString(colРоль)));
                         w.Write("<td>{0}</td>", HttpUtility.HtmlEncode(dbReader.GetString(colОписание)));
                         w.Write("</tr>");
