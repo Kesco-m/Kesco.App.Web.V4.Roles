@@ -117,7 +117,7 @@ namespace Kesco.App.Web.Roles
         /// <summary>
         ///     Задание ссылки на справку
         /// </summary>
-        protected override string HelpUrl
+        public override string HelpUrl
         {
             get { return ""; }
             set { value = ""; }

@@ -19,9 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kesco.Lib.Web.DBSelect.V4",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kesco.Lib.Log", "Kesco.Lib.Log\Kesco.Lib.Log.csproj", "{FC924B22-160A-4F7F-98EB-63E420DE694E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roles", "Roles\Kesco.App.Web.Roles.csproj", "{C78DF15A-3706-475A-A8A3-A292AFB4A2C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roles", "Roles\Roles.csproj", "{C78DF15A-3706-475A-A8A3-A292AFB4A2C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kesco.Lib.Web.Comet", "Kesco.Lib.Web.Comet\Kesco.Lib.Web.Comet.csproj", "{EB32DBFE-59E0-4F6C-A718-BE9BA708C64F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kesco.Lib.Web.Comet", "Kesco.Lib.Web.Comet\Kesco.Lib.Web.Comet\Kesco.Lib.Web.Comet.csproj", "{EB32DBFE-59E0-4F6C-A718-BE9BA708C64F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
