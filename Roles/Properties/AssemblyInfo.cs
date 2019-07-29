@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Kesco.Lib.Log;
 
@@ -34,4 +33,3 @@ using Kesco.Lib.Log;
 // Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
 // используя "*", как показано ниже:
 [assembly: AssemblyVersion("4.0.*")]
-

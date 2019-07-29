@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title><%= Resx.GetString("ROLES_AppTitle") %></title>
-    <script src="Kesco.Roles.js" type="text/javascript"></script>
+    <script src="Kesco.Roles.js?v=1" type="text/javascript"></script>
     <script src="/styles/Kesco.V4/JS/jquery.floatThead.min.js" type="text/javascript"></script>
     <style type="text/css">
         .floatLeft { float: left; }
@@ -17,7 +17,7 @@
         .marginT { margin-top: 3px; }
 
         .marginT2 { margin-top: 7px; }
-        
+
         .marginB2 { margin-bottom: 7px; }
 
         .w75 {
@@ -106,17 +106,16 @@
             <div class="disp_inlineBlockS">
                 <dbs:DBSBusinessProject ID="efPosition_BProject" runat="server" Width="230" OnChanged="efPosition_BProject_OnChanged" AutoSetSingleValue="True" MaxItemsInPopup="100" MaxItemsInQuery="101"></dbs:DBSBusinessProject>
             </div>
-        </div>       
+        </div>
     </div>
 
-     <div class="marginT2 marginL marginB2" style="font-size: 7pt">            
-            <div>&nbsp;</div>
-            <base:Changed runat="server" ID="efChanged"></base:Changed>
-           
-     </div>
+    <div class="marginT2 marginL marginB2" style="font-size: 7pt">
+        <div>&nbsp;</div>
+        <base:Changed runat="server" ID="efChanged"></base:Changed>
 
-   
-       
+    </div>
+
+
 </div>
 </body>
 </html>

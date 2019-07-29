@@ -32,9 +32,6 @@ namespace Kesco.App.Web.Roles
             });
         }
 
-        public bool IsReusable
-        {
-            get { return false; }
-        }
+        public bool IsReusable => false;
     }
 }

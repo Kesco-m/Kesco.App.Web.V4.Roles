@@ -14,6 +14,7 @@ using Kesco.Lib.Log;
 using Kesco.Lib.Web.Controls.V4;
 using Kesco.Lib.Web.Controls.V4.Common;
 using Kesco.Lib.Web.Settings;
+using Role = Kesco.Lib.Entities.Corporate.Role;
 
 namespace Kesco.App.Web.Roles
 {
@@ -142,12 +143,16 @@ ROLES_TitleAddRole:""{2}""
                     Resx.GetString("cmdSave"),
                     Resx.GetString("cmdCancel"),
                     Resx.GetString("ROLES_TitleAddRole")
-                    );
+                );
 
                 SetHandlers();
                 efFilter_Role.Focus();
                 _sortOrder = new SpecialQueue<string>();
             }
+        }
+
+        protected override void EntityInitialization(Entity copy = null)
+        {
         }
 
         /// <summary>
@@ -192,7 +197,6 @@ ROLES_TitleAddRole:""{2}""
                     base.ProcessCommand(cmd, param);
                     break;
             }
-            RestoreCursor();
         }
 
         #endregion
@@ -222,7 +226,15 @@ ROLES_TitleAddRole:""{2}""
 
             if (efFilter_Role.Value.Length == 0 && efFilter_Customer.Value.Length == 0)
             {
-                RenderNtf(w, new List<string> {Resx.GetString("ROLES_msgSetRoleOrOrganization")}, NtfStatus.Recommended);
+                RenderNtf(w,
+                    new List<Notification>
+                    {
+                        new Notification
+                        {
+                            Message = Resx.GetString("ROLES_msgSetRoleOrOrganization"), Status = NtfStatus.Recommended,
+                            SizeIsNtf = false, DashSpace = false
+                        }
+                    });
                 RenderData(w);
                 return;
             }
@@ -240,11 +252,11 @@ ROLES_TitleAddRole:""{2}""
                 {"@КодЛица", efFilter_Customer.Value.Length == 0 ? -1 : int.Parse(efFilter_Customer.Value)}
             };
             var cnPerson = new SqlConnection(Config.DS_person);
-            var personServer = cnPerson.DataSource;
+
             using (
                 var dbReader =
                     new DBReader(
-                        string.Format(SQLQueries.SELECT_РолиПоиск, personServer) + " ORDER BY " +
+                        SQLQueries.SELECT_РолиПоиск + " ORDER BY " +
                         _sortOrder.ReverseListValues, CommandType.Text,
                         Config.DS_user, sqlParams))
             {
@@ -271,6 +283,7 @@ ROLES_TitleAddRole:""{2}""
                             Resx.GetString("ROLES_labelRole"));
                         w.Write("</th>");
                     }
+
                     w.Write("<th>");
                     w.Write(
                         "<a href=\"javascript:void(0);\" onclick=\"roles_sortRoleList('Сотрудник');\" title='сортировать'>{0}</a>",
@@ -283,9 +296,9 @@ ROLES_TitleAddRole:""{2}""
                     w.Write("</th>");
                     w.Write("</tr>");
                     w.Write("</thead>");
-                    
+
                     w.Write("<tbody>");
-                     
+
                     while (dbReader.Read())
                     {
                         w.Write("<tr>");
@@ -299,7 +312,7 @@ ROLES_TitleAddRole:""{2}""
                                 HttpUtility.HtmlEncode(dbReader.GetString(colСотрудник) + ": " +
                                                        dbReader.GetString(colРоль) + " -> " +
                                                        dbReader.GetString(colОрганизация))
-                                ), Resx.GetString("ROLES_labelDeleteEmplRole"));
+                            ), Resx.GetString("ROLES_labelDeleteEmplRole"));
 
                         if (efFilter_Role.Value.Length == 0)
                         {
@@ -307,6 +320,7 @@ ROLES_TitleAddRole:""{2}""
                             w.Write(dbReader.GetString(colРоль));
                             w.Write("</td>");
                         }
+
                         w.Write("<td>");
                         var htmlId = Guid.NewGuid();
                         RenderLinkEmployee(w, htmlId.ToString(), dbReader.GetInt32(colКодСотрудника).ToString(),
@@ -321,20 +335,29 @@ ROLES_TitleAddRole:""{2}""
                             Resx.GetString("Msg_РедактироватьПозицию"),
                             dbReader.GetString(colОрганизация));
                         if (dbReader.GetInt32(colКодЛица) > 0)
-                        {
                             w.Write(
                                 "<a class='marginL' href=\"javascript:void(0);\" onclick=\"roles_addRoleEmployee({0},{1});\" title='{2}'><img src='/styles/new.gif' border=0/></a>",
                                 dbReader.GetInt32(colКодСотрудника), dbReader.GetInt32(colКодРоли),
                                 Resx.GetString("cmdAddTitle"));
-                        }
                         w.Write("</td>");
                         w.Write("</tr>");
                     }
+
                     w.Write("</tbody>");
                     w.Write("</table>");
                 }
                 else
-                    RenderNtf(w, new List<string> {Resx.GetString("lNoData")}, NtfStatus.Information);
+                {
+                    RenderNtf(w,
+                        new List<Notification>
+                        {
+                            new Notification
+                            {
+                                Message = Resx.GetString("lNoData"), Status = NtfStatus.Information, SizeIsNtf = false,
+                                DashSpace = false
+                            }
+                        });
+                }
             }
 
             RenderData(w);
@@ -348,13 +371,11 @@ ROLES_TitleAddRole:""{2}""
         {
             var columnDESC = field + " DESC";
             if (_sortOrder.Count > 0)
-            {
                 if (_sortOrder.Last().Equals(field))
                 {
                     _sortOrder.Remove(field);
                     field = columnDESC;
                 }
-            }
 
             _sortOrder.Remove(field);
             _sortOrder.Remove(columnDESC);
@@ -423,7 +444,9 @@ ROLES_TitleAddRole:""{2}""
                 efChanged.ChangedByID = (int) dt.Rows[0]["Изменил"];
             }
             else
+            {
                 efChanged.ChangedByID = null;
+            }
 
 
             OpenPositionForm(Resx.GetString("ROLES_TitleEditRole"), userId, roleId, personId);
@@ -480,9 +503,9 @@ ROLES_TitleAddRole:""{2}""
         /// <param name="e">Аргументы</param>
         protected void efFilter_Role_OnChanged(object sender, ProperyChangedEventArgs e)
         {
-            JS.Write("roles_refreshData();");
             RenderRoleDescription();
             FocusControl = "efFilter_Customer_0";
+            RefreshData();
         }
 
         /// <summary>
@@ -492,7 +515,7 @@ ROLES_TitleAddRole:""{2}""
         /// <param name="e">Аргументы</param>
         protected void efFilter_Customer_OnChanged(object sender, ProperyChangedEventArgs e)
         {
-            JS.Write("roles_refreshData();");
+            RefreshData();
         }
 
         #endregion
@@ -570,11 +593,17 @@ ROLES_TitleAddRole:""{2}""
                 roleId, personId);
 
             if (efPosition_Role.Value.Length == 0)
+            {
                 JS.Write("roles_setElementFocus(null,'efPosition_Role_0');");
+            }
             else if (efPosition_Employee.Value.Length == 0)
+            {
                 JS.Write("roles_setElementFocus(null,'efPosition_Employee_0');");
+            }
             else if (efPosition_Customer.Value.Length == 0)
+            {
                 JS.Write("roles_setElementFocus(null,'efPosition_Customer_0');");
+            }
             else if (efPosition_BProject.Value.Length == 0)
             {
                 if (efPosition_Employee.Value.Length == 0)
@@ -582,6 +611,7 @@ ROLES_TitleAddRole:""{2}""
                 else
                     JS.Write("roles_setElementFocus(null,'btnPosition_Save');");
             }
+
             ClearArtifact();
         }
 
@@ -668,7 +698,7 @@ ROLES_TitleAddRole:""{2}""
                 var cnPerson = new SqlConnection(Config.DS_person);
                 inputParameters.Add("@КодБизнесПроекта", int.Parse(efPosition_BProject.Value));
                 DBManager.ExecuteNonQuery(
-                    string.Format(SQLQueries.INSERT_РолиСотрудников_БизнесПроект, cnPerson.DataSource), CommandType.Text,
+                    SQLQueries.INSERT_РолиСотрудников_БизнесПроект, CommandType.Text,
                     Config.DS_user,
                     inputParameters);
             }
@@ -723,16 +753,19 @@ ROLES_TitleAddRole:""{2}""
             var w = new StringWriter();
 
             if (efFilter_Role.Value.Length == 0)
+            {
                 w.Write("");
+            }
             else
             {
-                var role = new Lib.Entities.Corporate.Role(efFilter_Role.Value);
+                var role = new Role(efFilter_Role.Value);
                 if (role.Unavailable)
                     w.Write("");
                 else
                     w.Write("<div class='floatLeft w75'>{1}:</div><div class='disp_inlineBlock'>{0}</div>",
                         role.Description, Resx.GetString("lblDescriptionForm"));
             }
+
             JS.Write("var objRoleDesrc= gi('divRoleDescription'); if (objRoleDesrc) objRoleDesrc.innerHTML = '{0}';",
                 HttpUtility.JavaScriptStringEncode(w.ToString()));
         }

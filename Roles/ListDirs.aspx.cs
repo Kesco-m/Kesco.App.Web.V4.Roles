@@ -107,11 +107,13 @@ namespace Kesco.App.Web.Roles
                 if (Request.QueryString["return"] != null && Request.QueryString["return"] != "")
                     _returnState = int.Parse(Request.QueryString["return"]);
                 if (Request.QueryString["ids"] != null && Request.QueryString["ids"] != "")
-                {
                     _selectedIds = Request.QueryString["ids"].Split(',').ToList();
-                }
                 JS.Write(@"domain='{0}';", Config.domain);
             }
+        }
+
+        protected override void EntityInitialization(Entity copy = null)
+        {
         }
 
         /// <summary>
@@ -130,7 +132,6 @@ namespace Kesco.App.Web.Roles
                     base.ProcessCommand(cmd, param);
                     break;
             }
-            RestoreCursor();
         }
 
         #endregion
@@ -199,10 +200,12 @@ namespace Kesco.App.Web.Roles
                     {
                         w.Write("<tr>");
                         if (_returnState == 1)
+                        {
                             w.Write(
                                 "<td><a href=\"javascript:void();\" onclick=\"v4_returnValue({0},'{1}');\"><img src=\"/styles/backtolist.gif\" border=0/></a></td>",
                                 dbReader.GetInt32(colКодОбщейПапки),
                                 HttpUtility.HtmlEncode(dbReader.GetString(colОбщаяПапка)));
+                        }
                         else if (_returnState == 2)
                         {
                             var checkedItem = _selectedIds.Contains(dbReader.GetInt32(colКодОбщейПапки).ToString());
@@ -211,8 +214,9 @@ namespace Kesco.App.Web.Roles
                                 dbReader.GetInt32(colКодОбщейПапки),
                                 HttpUtility.HtmlEncode(dbReader.GetString(colОбщаяПапка)),
                                 checkedItem ? "checked" : ""
-                                );
+                            );
                         }
+
                         w.Write("<td>{0}</td>", HttpUtility.HtmlEncode(dbReader.GetString(colОбщаяПапка)));
 
                         w.Write("</tr>");

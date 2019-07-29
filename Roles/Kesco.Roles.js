@@ -4,11 +4,12 @@ var roles_clientLocalization = {};
 function roles_setElementFocus(className, elId) {
     if (elId != null && elId.length > 0) {
         setTimeout(function() {
-            var obj = gi(elId);
-            if (obj) {
-                obj.focus();
-            }
-        }, 100);
+                var obj = gi(elId);
+                if (obj) {
+                    obj.focus();
+                }
+            },
+            100);
     } else
         $("." + className).first().focus();
 }
@@ -25,11 +26,11 @@ function roles_RecordsAdd(titleForm, userId, roleId, personId) {
     } else
         roles_userId = roles_roleId = roles_personId = "";
 
-    
+
     var width = 400;
     var height = 250;
     var onOpen = null; //function () { roles_addRole(); };
-    var onClose = function () { v4s_hidePopup(true); }
+    var onClose = function() { v4s_hidePopup(true); };
     var buttons = [
         {
             id: "btnPosition_Save",
@@ -53,8 +54,8 @@ function roles_RecordsAdd(titleForm, userId, roleId, personId) {
     ];
 
     roles_RecordsAdd.form = v4_dialog("divRoleAdd", $("#divRoleAdd"), title, width, height, onOpen, onClose, buttons);
-            
-    
+
+
     $("#divRoleAdd").dialog("option", "title", title);
     roles_RecordsAdd.form.dialog("open");
 
@@ -62,30 +63,35 @@ function roles_RecordsAdd(titleForm, userId, roleId, personId) {
 
 function roles_Records_Save(check) {
 
-    Wait.render(true);
-    cmdasync("cmd", "PositionSave", "UserId", roles_userId, "RoleId", roles_roleId, "PersonId", roles_personId, "Check", (check == 0) ? 0 : 1);
+    cmdasync("cmd",
+        "PositionSave",
+        "UserId",
+        roles_userId,
+        "RoleId",
+        roles_roleId,
+        "PersonId",
+        roles_personId,
+        "Check",
+        (check == 0) ? 0 : 1);
 }
 
 function roles_Records_Close() {
     if (null != roles_RecordsAdd.form)
         roles_RecordsAdd.form.dialog("close");
-    cmd('cmd', 'ClearArtifact');
+    cmd("cmd", "ClearArtifact");
     roles_setElementFocus(null, "efFilter_Role_0");
 }
 
 
 function roles_clearData() {
-    Wait.render(true);
     cmdasync("cmd", "ClearData");
 }
 
 function roles_refreshData() {
-    Wait.render(true);
     cmdasync("cmd", "RefreshData");
 }
 
 function roles_refreshDataList() {
-    Wait.render(true);
     cmdasync("cmd", "RefreshDataList");
 }
 
@@ -99,7 +105,6 @@ function roles_addRoleEmployee(userId, roleId) {
 }
 
 function roles_deleteRole(userId, roleId, personId) {
-    Wait.render(true);
     cmdasync("cmd", "Delete", "UserId", userId, "RoleId", roleId, "PersonId", personId);
 }
 
@@ -108,7 +113,6 @@ function roles_editPositionRole(userId, roleId, personId) {
 }
 
 function roles_sortRoleList(fieldName) {
-    Wait.render(true);
     cmdasync("cmd", "Sort", "FieldName", fieldName);
 
 }
@@ -130,30 +134,29 @@ function roles_getCheckedItemsDataList() {
 }
 
 
-$(document).ready(function () {
+$(document).ready(function() {
 
     var objFrom_ListRoles = gi("divDataList");
     var objFrom_ListData = gi("divData");
     if (objFrom_ListRoles) $("#divDataList").height($(window).height() - 60);
     if (objFrom_ListData) $("#divData").height($(window).height() - 100);
 
-    
 
-    $(window).resize(function () {
+    $(window).resize(function() {
 
         if (objFrom_ListRoles) $("#divDataList").height($(window).height() - 60);
         if (objFrom_ListData) $("#divData").height($(window).height() - 100);
-        
+
     });
 });
 
 function fixedHeader() {
-    $('table.grid').floatThead({
-        position: 'absolute',
+    $("table.grid").floatThead({
+        position: "absolute",
         scrollContainer: true
     });
 }
 
 function fixedHeaderDestroy() {
-    $('table.grid').floatThead('destroy'); 
+    $("table.grid").floatThead("destroy");
 }

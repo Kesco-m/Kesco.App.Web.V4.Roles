@@ -5,17 +5,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title><%= Resx.GetString("ROLES_RolesList") %></title>
-    <script src="Kesco.Roles.js" type="text/javascript"></script>
+    <script src="Kesco.Roles.js?v=1" type="text/javascript"></script>
     <style type="text/css">
         .marginL { margin-left: 5px; }
     </style>
 </head>
 <body>
 <form id="mvcDialogResult" action="<%= Request["callbackUrl"] %>" method="post">
-        <input type="hidden" name="escaped" value="0" />
-		<input type="hidden" name="control" value="" />
-        <input type="hidden" name="multiReturn" value="" />
-		<input type="hidden" name="value" value="" />
+    <input type="hidden" name="escaped" value="0"/>
+    <input type="hidden" name="control" value=""/>
+    <input type="hidden" name="multiReturn" value=""/>
+    <input type="hidden" name="value" value=""/>
 </form>
 
 <%= RenderDocumentHeader() %>

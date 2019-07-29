@@ -85,6 +85,10 @@ namespace Kesco.App.Web.Roles
             }
         }
 
+        protected override void EntityInitialization(Entity copy = null)
+        {
+        }
+
         /// <summary>
         ///     Обработка клиентских команд
         /// </summary>
@@ -101,7 +105,6 @@ namespace Kesco.App.Web.Roles
                     base.ProcessCommand(cmd, param);
                     break;
             }
-            RestoreCursor();
         }
 
         #endregion

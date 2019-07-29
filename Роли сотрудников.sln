@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kesco.Lib.BaseExtention", "Kesco.Lib.BaseExtention\Kesco.Lib.BaseExtention.csproj", "{D26C8D93-C51B-4F61-ADA8-8527A18E4C41}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kesco.Lib.Web.Controls.V4", "Kesco.Lib.Web.Controls.V4\Kesco.Lib.Web.Controls.V4.csproj", "{C24FDAB8-D076-4F0C-8932-DB8160E4C4EF}"
