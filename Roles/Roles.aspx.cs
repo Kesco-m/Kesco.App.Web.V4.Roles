@@ -149,6 +149,14 @@ ROLES_TitleAddRole:""{2}""
                 efFilter_Role.Focus();
                 _sortOrder = new SpecialQueue<string>();
             }
+
+            if (!JsScripts.ContainsKey("GridfloatThead"))
+            {
+                RegisterScript("GridfloatThead",
+                    string.Format(
+                        "<script src='/Styles/Kesco.V4/JS{0}/jquery.floatThead.min.js' type='text/javascript'></script>",
+                        Config.versionV4js));
+            }
         }
 
         protected override void EntityInitialization(Entity copy = null)

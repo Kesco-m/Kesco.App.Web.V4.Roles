@@ -8,7 +8,6 @@
 <head runat="server">
     <title><%= Resx.GetString("ROLES_AppTitle") %></title>
     <script src="Kesco.Roles.js?v=1" type="text/javascript"></script>
-    <script src="/styles/Kesco.V4/JS/jquery.floatThead.min.js" type="text/javascript"></script>
     <style type="text/css">
         .floatLeft { float: left; }
 
